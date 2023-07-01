@@ -13,4 +13,15 @@
                        class: "rounded bg-gray-600 mr-2 align-middle checked:bg-gray-400" %>
     <%= task.description %>
   <% end %>
+
+  <%= link_to edit_task_path(task), class: "btn bg-gray-100" do %>
+    Edit
+  <% end %>
+
+
+  <div class="inline-block ml-2">
+    <%= button_to "Delete", task_path(task),
+                  method: :delete,
+                  class: "btn bg-red-100" %>
+  </div>
 </div>
