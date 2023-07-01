@@ -9,7 +9,7 @@ export default class extends Controller {
         const id = e.target.dataset.id
         const csrfToken = document.querySelector("[name='csrf-token']").content
 
-        fetch(`/tasks/${id}/toggle`, {
+        fetch(`/tasks/${id}/check`, {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -20,9 +20,10 @@ export default class extends Controller {
             },
             body: JSON.stringify({ completed: e.target.checked }) // body data type must match "Content-Type" header
         })
-          .then(response => response.json())
-          .then(data => {
-             alert(data.message)
-           })
+        .then(response => response.text())
+        .then(data => {
+          window.location.href = "/tasks"; // Redirect to the tasks page
+    });
+
     }
 }

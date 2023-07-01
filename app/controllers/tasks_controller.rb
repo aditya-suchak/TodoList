@@ -1,7 +1,8 @@
 class TasksController < ApplicationController
 
   def index
-    @tasks = Task.all
+    @tasks = Task.where(completed: [false, nil])
+    @ctasks = Task.where(completed: true)
     @task = Task.new
   end
 
@@ -17,11 +18,20 @@ class TasksController < ApplicationController
     end
   end
 
-  def toggle
+  def check
     @task = Task.find(params[:id])
     @task.update(completed: params[:completed])
 
     render json: { message: "Success" }
+
+    # respond_to do |format|
+    #   if updated
+    #     format.html { redirect_to tasks_url, notice: "Task was successfully completed" }
+    #   else
+    #     format.html { render :new, status: :unprocessable_entity }
+    #   end
+    end
+
   end
 
   private

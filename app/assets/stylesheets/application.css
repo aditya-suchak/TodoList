@@ -13,3 +13,11 @@
  *= require_tree .
  *= require_self
  */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import "font-awesome";
+
+/* Import the icon library CSS (e.g., Font Awesome) */
+/* @import 'font-awesome/css/font-awesome.css'; */
+/* app/assets/stylesheets/application.css */
