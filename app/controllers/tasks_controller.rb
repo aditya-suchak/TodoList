@@ -22,15 +22,11 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @task.update(completed: params[:completed])
 
-    render json: { message: "Success" }
-
-    # respond_to do |format|
-    #   if updated
-    #     format.html { redirect_to tasks_url, notice: "Task was successfully completed" }
-    #   else
-    #     format.html { render :new, status: :unprocessable_entity }
-    #   end
-    # end
+    render turbo_stream: turbo_stream.append(
+      "dom_id #{@task}",
+      partial: "task",
+      locals: { task: @task }
+    )
   end
 
   def edit

@@ -20,10 +20,16 @@ export default class extends Controller {
             },
             body: JSON.stringify({ completed: e.target.checked }) // body data type must match "Content-Type" header
         })
-        .then(response => response.text())
-        .then(data => {
-          window.location.href = "/tasks"; // Redirect to the tasks page
-    });
-
+        .then(response => {
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.includes('text/html')) {
+              return response.text();
+            } else {
+              return response.body;
+            }
+          })
+          .then(data => {
+            Turbo.visit(window.location, { action: "replace" }); // Update the Turbo frame
+          });
     }
 }
