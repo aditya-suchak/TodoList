@@ -1,13 +1,13 @@
 class TasksController < ApplicationController
 
   def index
-    @tasks = Task.where(completed: [false, nil])
-    @ctasks = Task.where(completed: true)
+    @tasks = current_user.tasks.where(completed: [false, nil])
+    @ctasks = current_user.tasks.where(completed: true)
     @task = Task.new
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.new(task_params)
 
     respond_to do |format|
       if @task.save
@@ -19,7 +19,7 @@ class TasksController < ApplicationController
   end
 
   def check
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
     @task.update(completed: params[:completed])
 
     render turbo_stream: turbo_stream.append(
@@ -30,11 +30,11 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
   end
 
   def update
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
     respond_to do |format|
       if @task.update(task_params)
         format.html { redirect_to tasks_url, notice: "Task was successfully updated" }
@@ -45,9 +45,9 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
     @task.destroy
-    redirect_to tasks_url, notice: "Post was successfully deleted."
+    redirect_to tasks_url, notice: "task was successfully deleted."
   end
 
   private
